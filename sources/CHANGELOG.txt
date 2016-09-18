@@ -1,0 +1,125 @@
+
+## Version 3.2
+
+ * correction: si CURLOPT_FOLLOWLOCATION désactivé, suivre manuellement les redirections.
+ * correction: utiliser portail.free.fr pour le test de connexion distant.
+ * correction: utiliser le protocol HTTPs pour Leboncoin et alerte.ilatumi.org.
+ * correction: supprimer le nom du fichier dans l'URL de base de LBCAlerte.
+ * correction: crash possible si URL invalide.
+ * correction: amélioration des infos de log pour la tâche cron.
+
+## Version 3.1
+
+ * ajout: prise en charge de SeLoger.com.
+ * correction: last_id contient maintenant l'ID de la dernière annonce et max_id l'ID max trouvé.
+ * correction: indiquer l'URL mobile seulement si disponible pour le site d'annonce.
+ * correction: si pas de date de publication fournie, on désactive la détection des annonces remontées.
+ * correction: date optionnelle dans les flux RSS.
+ * correction: date mise à jour du parser pour le nouveau site LBC.
+
+## Version 3.0
+
+ * ajout: liens modifier, supprimer et activer/désactiver dans les mails d'alerte.
+ * ajout: bouton permettant de réinitialiser les alertes afin de recevoir toutes les dernières annonces.
+ * correction: amélioration de la mise à jour automatique.
+
+## Version 2.9
+
+ * correction: prise en charge du protocole HTTPS pour les URL Leboncoin.
+ * correction: utiliser le protocole HTTPS pour les URL externe (Google) (fixes 34).
+
+## Version 2.8
+
+ * ajout: en charge de NotityMyAndroid et Pushover pour les alertes.
+ * correction: mise en forme de la liste des catégories des formulaires (fixes #29)
+ * correction: ne pas échapper les caractères spéciaux pour l'URL de recherche dans le flux RSS (fixes #27)
+ * correction: indiquer le nombre de nouelles annonces dans les mails (fixes #24)
+ * correction: lien vers la version mobile de l'annonce dans le mail d'alerte (fixes #17).
+
+## Version 2.7
+
+ * ajout: message "Pas de photo disponible." dans les flux RSS lorsqu'une annonce n'a pas de photo.
+ * ajout: mise en place d'une nouvelle structure de classe pour permettre l'ajout d'autre site d'annonce dans le système.
+ * ajout: prise en charge du site d'annonce Olx.ua
+ * correction: supprimer le trie par prix lors de l'enregistrement des URLs (fixes #30).
+ * correction: configurer correctement l'envoi des mails (fixes #28).
+ * correction: avertissement sur l'utilisation du filtre sur catégorie (fixes #22).
+ * correction: ne pas activer CURLOPT_FOLLOWLOCATION si open_basedir définit (fixes #18).
+ * correction: le fichier lock ne fait pas son boulot et des tâches parallèles s'exécutaient.
+ * correction: enlever la date pour l'ID des éléments de flux (risque de doublon pour Olx)
+ * correction: utiliser \AdService\SiteConfigFactory::factory pour valider l'URL de recherche.
+ * correction: mise en forme du rendu des alertes.
+ * correction: orthographe.
+ * supprimer: système de daemon car non utilisé.
+
+## Version 2.6.2
+
+ * ajout: oublie d'ajout d'une colonne en BDD.
+ * correction: modification du parser d'annonce suite à modif sur Leboncoin.
+
+## Version 2.6.1
+
+ * correction: crash mise à jour.
+
+## Version 2.6
+
+ * ajout: option pour ne pas recevoir les annonces remontées (évite les doublons)
+ * ajout: prise en charge des notifications SMS OVH et Pushbullet.
+ * correction: installation bloquée par le système de mise à jour automatique.
+ * correction: définir la propriété Sender de PHPMailer afin d'éviter de passer en spam.
+
+## Version 2.5
+
+ * ajout: gestion de la mise à jour automatique.
+ * ajout: possibilité d'utiliser une base de données (MySQL) pour stocker les informations.
+ * ajout: configuration du stockage des données dans l'administration.
+ * ajout: possibilité de changer le type de stockage avec prise en charge d'une migration (seulement fichier > BDD).
+ * correction: ne pas logger "Contrôle de l'alerte " si l'alerte n'a pas besoin d'être analysée.
+ * correction: masquer les colonnes "Prix" et "Villes" du tableau d'alerte si non utilisées.
+ * correction: refonte graphique et simplification des formulaires + correctons divers bugs.
+
+## Version 2.4.1
+
+ * correction: faute orthographe dans nom de méthode.
+
+## Version 2.4
+
+ * ajout: notification par SMS pour les abonnés Free Mobile.
+ * ajout: numéroter les lignes dans le tableau des alertes mails.
+ * ajout: filtre multi départements en complément du filtre multi villes (thx @greenchap).
+ * ajout: trie des alertes par email ou par titre.
+ * ajout: configurer l'UTF-8 pour les fonctions mb_*
+ * ajout: prise en charge de certain proxy web (expérimental).
+ * amélioration: formulaire d'ajout et de modification d'alerte améliorer.
+ * correction: conflit de session possible si installation en parallèle avec d'autre application (sous dossier).
+ * correction: trier les groupes par ordre alphabétique.
+ * correction: corriger la définition du type de proxy.
+ * utiliser file_get_contents/file_put_contents au lieu de "rename" (problème de droit).
+
+## Version 2.3
+
+ * correction: mise en place de rotation de log (5*3Mo max).
+ * correction: paramètre invalide pour la fonction date.
+ * correction: tester la connexion même si aucun proxy spécifié.
+
+## Version 2.2
+
+ * ajout: possibilité de spécifier plusieurs adresses de destinataire pour les alertes mails.
+ * amélioration de l'affichage de la liste des alertes.
+ * correction: crash de check.php si une adresse mail est invalide.
+ * correction: vérifier la prise en charge des SIGNAL.
+
+## Version 2.1
+
+ * correction: check.php crash sur variable inéxistante.
+
+## Version 2.0
+
+ * fusion de LBCRss et LBCMail.
+ * ajout: installateur.
+ * ajout: panneau d'administration (gestion proxy, configuration envoi de mail, etc.).
+ * ajout: gestion de compte utilisateur.
+ * ajout: que ce soit pour les flux RSS ou les alertes mail, une identification est requise.
+ * ajout: possibilité de recevoir les nouvelles annonces dans des mails séparés.
+ * ajout: nouveau système de contrôle des alertes.
+ * ajout: inclure l'URL de recherche dans le mail.

@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# Exit on command errors and treat unset variables as an error
+set -eu
+
+# This is a multi-instance app, meaning it can be installed several times independently
+# The id of the app as stated in the manifest is available as $YNH_APP_ID
+# The instance number is available as $YNH_APP_INSTANCE_NUMBER (equals "1", "2", ...)
+# The app instance name is available as $YNH_APP_INSTANCE_NAME
+#    - the first time the app is installed, YNH_APP_INSTANCE_NAME = ynhexample
+#    - the second time the app is installed, YNH_APP_INSTANCE_NAME = ynhexample__2
+#    - ynhexample__{N} for the subsequent installations, with N=3,4, ...
+# The app instance name is probably what you are interested the most, since this is
+# guaranteed to be unique. This is a good unique identifier to define installation path,
+# db names, ...
+app=$YNH_APP_INSTANCE_NAME
+
+# Retrieve arguments
+domain=$YNH_APP_ARG_DOMAIN
+path=$YNH_APP_ARG_PATH
+password=$YNH_APP_ARG_PASSWORD
+is_public=$YNH_APP_ARG_IS_PUBLIC
+
+# Source YunoHost helpers
+source /usr/share/yunohost/helpers
+
+# Save app settings
+ynh_app_setting_set "$app" is_public "$is_public"
+
+# Check domain/path availability
+sudo yunohost app checkurl "${domain}${path}" -a "$app" \
+    || ynh_die "Path not available: ${domain}${path}"
+
+# Copy source files
+src_path=/var/www/$app
+sudo mkdir -p $src_path/var
+sudo cp -a ../sources/. $src_path
+
+# Set permissions to app files
+# you may need to make some file and/or directory writeable by www-data (nginx user)
+sudo chown -R root: $src_path
+
+# Generate MySQL password and create database
+dbuser=$app
+dbname=$app
+dbpass=$(ynh_string_random 12)
+ynh_app_setting_set "$app" mysqlpwd "$dbpass"
+ynh_mysql_create_db "$dbname" "$dbuser" "$dbpass"
+
+# Load initial SQL into the new database  
+#ynh_mysql_connect_as "$dbuser" "$dbpass" "$dbname" < "../sources/sql/mysql.init.sql"
+
+# Modify Nginx configuration file and copy it to Nginx conf directory
+nginx_conf=../conf/nginx.conf
+sed -i "s@YNH_WWW_PATH@$path@g" $nginx_conf
+sed -i "s@YNH_WWW_ALIAS@$src_path/@g" $nginx_conf
+# If a dedicated php-fpm process is used:
+# Don't forget to modify ../conf/nginx.conf accordingly or your app will not work!
+# sed -i "s@YNH_WWW_APP@$app@g" $nginx_conf
+sudo cp $nginx_conf /etc/nginx/conf.d/$domain.d/$app.conf
+
+# Set permissions and reload nginx (needed at this stage for the PHP piwigo installation process)
+sudo service nginx reload
+sudo yunohost app setting "$app" unprotected_uris -v "/"
+sudo yunohost app ssowatconf
+
+
+# Configure LBCAlerte via curl
+sleep 2
+curl --resolve $domain:443:127.0.0.1 -kL -X POST https://$domain$path/index.php?mod=install --data "password=$password&confirmPassword=$password&type=db&db[host]=localhost&db[user]=$dbuser&db[password]=$dbpass&db[dbname]=$dbname" > /tmp/LBCAlerte-install.log 2>&1
+
+#protect URIs if private
+if [ $is_public -eq 0 ];
+then
+  sudo yunohost app setting "$app" -d unprotected_uris
+  sudo yunohost app setting "$app" protected_uris -v "/"
+fi
+
+# Add cron job
+cron_path="/etc/cron.d/$app"
+sed -i "s@#DESTDIR#@${src_path}@g" ../conf/LBCAlerte.cron
+sudo cp ../conf/LBCAlerte.cron "$cron_path"
+sudo chmod 644 "$cron_path"

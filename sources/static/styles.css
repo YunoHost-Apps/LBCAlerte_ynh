@@ -1,0 +1,341 @@
+
+html {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	background: #FFFFFF;
+    padding: 0;
+}
+
+body {
+	margin: 0;
+	background: transparent;
+}
+
+a:link,
+a:visited,
+a:active,
+a:hover
+{
+	color: #AB0000;
+	text-decoration: none;
+}
+
+
+a.link-create-alert {
+	font-size: .9em;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+table {
+    border: 1px solid #999999;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 10px 0;
+    width: 100%;
+}
+table thead tr {
+    background: #FFFFFF;
+    background: linear-gradient(bottom, #FFFFFF, #E0E0E0) no-repeat #E0E0E0;
+    background: linear-gradient(to bottom, #FFFFFF, #E0E0E0) no-repeat #E0E0E0;
+    line-height: 30px;
+}
+table td, table th {
+    border: 1px solid #999999;
+    padding: 2px 5px;
+}
+table td {
+    line-height: 200%;
+}
+table td.title {
+    text-align: left;
+}
+table td.link {
+    word-wrap: break-word;
+    text-align: left;
+}
+table td.intervalle {
+    text-align: right;
+    padding-right: 10px;
+}
+table img {
+	vertical-align: middle;
+}
+.error {
+    color: #EF0000;
+    font-weight: bold;
+    margin: 0;
+}
+form {
+	width: 100%;
+	max-width: 800px;
+}
+form input,
+form textarea {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+}
+form fieldset {
+    padding: 10px 30px;
+    margin-bottom: 40px;
+}
+form legend {
+	font-size: 1.5em;
+}
+form > h2 {
+    padding: 5px 10px;
+    font-size: 1.2em;
+    
+    background: #FFFFFF;
+    background: linear-gradient(bottom, #FFFFFF, #E0E0E0) no-repeat #E0E0E0;
+    background: linear-gradient(to bottom, #FFFFFF, #E0E0E0) no-repeat #E0E0E0;
+    color: #AB0000;
+    border-left: 1px solid #BBBBBB;
+    border: 1px solid #BBBBBB;
+    margin: 10px 0 0 0;
+}
+form dl {
+    background: #FDFDFD;
+    border: 1px solid #BBBBBB;
+    padding: 10px;
+    margin: 0;
+}
+form h2 + dl {
+    border-top: 1px solid #DDDDDD;
+}
+form dt {
+    font-weight: bold;
+}
+form dd {
+    margin: 0 0 20px 0;
+    
+    border: 1px solid #E5E5E5;
+    padding: 0;
+    line-height: 30px;
+}
+form .form-more {
+    margin: 0 1%;
+    color: #424242;
+}
+
+form dt label {
+	background: #F5F5F5;
+    background: linear-gradient(to bottom, #E5E5E5, #F0F0F0);
+    color: #000000;
+	padding: 0 1%;
+	line-height: 250%;
+	display: block;
+}
+form select,
+form input[type=text],
+form input[type=password],
+form textarea {
+	border: none;
+	padding: 0;
+	margin: 0;
+	height: 26px;
+	vertical-align: middle;
+	width: 98%;
+	padding: 0 1%;
+	background: #424242;
+	color: #FFF;
+}
+form textarea {
+    height: 260px;
+}
+form input[type=checkbox] {
+	padding: 0;
+	margin: 0;
+	vertical-align: middle;
+}
+form dd label {
+	padding: 0;
+	margin: 0 40px 0 1%;
+    cursor: pointer;
+}
+form input[type=submit] {
+    padding: 0 10px;
+    font-size: 1.2em;
+    background: #FFFFFF;
+    background: linear-gradient(bottom, #FFFFFF, #E0E0E0) no-repeat #E0E0E0;
+    background: linear-gradient(to bottom, #FFFFFF, #E0E0E0) no-repeat #E0E0E0;
+    color: #000000;
+    border: 1px solid #BBBBBB;
+    margin-right: 10px;
+    cursor: pointer;
+    height: 36px;
+    transition: all linear 200ms;
+}
+form input[type=submit]:hover {
+    box-shadow: 0 0 5px #AAA;
+}
+form .description {
+	margin: 0 0 0 1%;
+	color: #333333;
+}
+
+header {
+	background: #F0F0F0;
+	background: linear-gradient(bottom, #FFFFFF, #DDDDDD) no-repeat #E0E0E0;
+	background: linear-gradient(to bottom, #FFFFFF, #DDDDDD) no-repeat #E0E0E0;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    box-shadow: 0 0 5px #000000;
+    color: #000000;
+    position: relative;
+    z-index: 2;
+}
+header h1 {
+	margin: 0;
+	padding: 10px;
+}
+header h1 a:link,
+header h1 a:active,
+header h1 a:hover,
+header h1 a:visited
+{
+	color: #333333;
+}
+
+footer {
+    background: #FFFFFF;
+    margin: 0 0 10px 0;
+    padding: 0 10px;
+    color: #000000;
+    line-height: 30px;
+    border-top: 1px solid #CCCCCC;
+    font-size: .85em;
+}
+
+.topmenu {
+    background: #424242;
+	margin: 0;
+	padding: 0 10px;
+	list-style: none;
+	overflow: hidden;
+	line-height: 30px;
+	font-size: 1em;
+	text-transform: uppercase;
+}
+.topmenu li {
+	float: left;
+}
+.topmenu a:link,
+.topmenu a:hover,
+.topmenu a:visited,
+.topmenu a:active
+{
+	padding: 0 20px;
+	color: #FFFFFF;
+	display: block;
+}
+.topmenu a span
+{
+	font-size: .9em;
+	text-transform: none;
+}
+.topmenu img
+{
+	vertical-align: middle;
+}
+.topmenu li:hover,
+.topmenu li.active {
+    background: #EF0000;
+}
+
+.content {
+	padding: 30px 10px;
+    background: #F0F0F0;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+.content > h2 {
+	margin-top: 0;
+	font-size: 1.3em;
+}
+
+.formbox {
+	cursor: pointer;
+    font-size: .95em;
+}
+.formbox span {
+	font-size: .7em;
+	text-transform: none;
+}
+
+form input[name=price_min],
+form input[name=price_max] {
+	width: 100px;
+}
+
+form .categories {
+	overflow: auto;
+}
+form .categories h3 {
+	margin: 0 1%;
+}
+form .categories label {
+	margin: 0 1%;
+	display: block;
+	vertical-align: middle;
+	line-height: 160%;
+	white-space: nowrap;
+}
+form .categories input[type=checkbox] {
+	margin: 0 5px 0 0;
+}
+.categories-list {
+    float: left;
+    width: 33.33%;
+}
+.categories-list {
+    float: left;
+    width: 33.33%;
+    margin-bottom: 10px;
+}
+.categories-list-4,
+.categories-list-7,
+.categories-list-10
+{
+    clear: left;
+}
+
+.notification-list label {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0 1%;
+    width: 30%;
+}
+
+.warning {
+    font-weight: bold;
+    margin: 0 1%;
+    line-height: 130%;
+}
+.warning span {
+    color: #EF0000;
+}
+
+
+/* Log */
+.lastlog {
+	background: #FAFAFA;
+	border: 1px solid #DDDDDD;
+	height: 500px;
+	list-style: none;
+	padding: 10px;
+	margin: 0;
+	line-height: 130%;
+	overflow: auto;
+}
+.lastlog .lastlog-error {
+	color: #E00000;
+}
+
+
+
+
+
+

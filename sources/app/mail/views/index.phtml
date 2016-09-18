@@ -1,0 +1,153 @@
+<p>
+    <?php if (0 < $nbAlertes = count($alerts)) : ?>
+    <strong><?php echo $nbAlertes ?> <?php
+        echo $nbAlertes > 1?"alertes enregistrées":"alerte enregistrée"; ?></strong> |
+    <?php endif; ?>
+    <a href="?mod=mail&amp;a=form" class="link-create-alert">Ajouter une alerte</a> |
+    <a href="?mod=mail&amp;a=reset">Tout renvoyer</a>
+</p>
+
+<?php if ($groups) : ?>
+<?php foreach ($groups AS $group) : ?>
+<?php if (count($groups) > 1 || $group != "Sans groupe") : ?>
+<h2><?php echo $group != "Sans groupe"?"Groupe : ":""; ?><?php echo htmlspecialchars($group); ?></h2>
+<?php endif; ?>
+<?php $alerts = $alertsByGroup[$group]; ?>
+<table style="width: 100%;">
+    <thead>
+        <tr>
+            <th style="width: 20px"></th>
+            <th style="width: 250px"><?php if ($sort == "email") :
+                ?><img src="static/images/sort-<?php echo $order; ?>.png" alt="" />&nbsp;<?php
+                endif; ?><a href="?mod=mail&amp;sort=email">Envoyer à</a></th>
+            <th><?php if ($sort == "title") :
+            ?><img src="static/images/sort-<?php echo $order; ?>.png" alt="" />&nbsp;<?php
+                endif; ?><a href="?mod=mail&amp;sort=title">Titre</a></th>
+            <th style="width: 100px">Intervalle</th>
+            <?php if ($showPrice) : ?>
+            <th style="width: 100px">Prix</th>
+            <?php endif; ?>
+            <?php if ($showCities) : ?>
+            <th style="width: 200px">Villes</th>
+            <?php endif; ?>
+            <?php if ($notification["freeMobile"]
+                || $notification["ovh"]
+                || $notification["pushbullet"]
+                || $notification["notifymyandroid"]
+                || $notification["pushover"]
+                ) : ?>
+            <th style="width: 140px">Envoyer par email</th>
+            <?php if ($notification["freeMobile"]) : ?>
+            <th style="width: 140px">SMS Free Mobile</th>
+            <?php endif; ?>
+            <?php if ($notification["ovh"]) : ?>
+            <th style="width: 140px">SMS OVH</th>
+            <?php endif; ?>
+            <?php if ($notification["pushbullet"]) : ?>
+            <th style="width: 140px">Pushbullet</th>
+            <?php endif; ?>
+            <?php if ($notification["notifymyandroid"]) : ?>
+            <th style="width: 140px">NotityMyAndroid</th>
+            <?php endif; ?>
+            <?php if ($notification["pushover"]) : ?>
+            <th style="width: 140px">Pushover</th>
+            <?php endif; ?>
+            <?php endif; ?>
+            <th style="width: 70px">Actif</th>
+            <th style="width: 170px">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $i = 1; foreach ($alerts AS $alert) : ?>
+        <tr>
+            <td><?php echo $i++; ?></td>
+            <td><?php echo str_replace(",", "<br />", htmlspecialchars($alert->email)); ?></td>
+            <td class="title"><a href="<?php echo htmlspecialchars($alert->url); ?>" target="_blank"><?php
+                echo $alert->title?htmlspecialchars($alert->title):"-"; ?></a></td>
+            <td class="intervalle"><?php echo (int)$alert->interval; ?> mins</td>
+            <?php if ($showPrice) : ?>
+            <td>
+                <?php if ($alert->price_min != -1 && $alert->price_max != -1) : ?>
+                entre <?php echo $alert->price_min; ?>€ et <?php echo $alert->price_max; ?>€
+                <?php elseif ($alert->price_min != -1) : ?>
+                à partir de <?php echo $alert->price_min; ?>€
+                <?php elseif ($alert->price_max != -1) : ?>
+                jusque <?php echo $alert->price_max; ?>€
+                <?php else: ?>
+                -
+                <?php endif; ?>
+            </td>
+            <?php endif; ?>
+            <?php if ($showCities) : ?>
+            <td>
+                <?php if ($alert->cities) : ?>
+                <ul style="margin: 0; padding: 0 0 0 15px;"><li>
+                <?php echo str_replace("\n", "</li><li>", htmlspecialchars($alert->cities)); ?>
+                </li></ul>
+                <?php else: ?>
+                -
+                <?php endif; ?>
+            </td>
+            <?php endif; ?>
+            <?php if ($notification["freeMobile"]
+                || $notification["ovh"]
+                || $notification["pushbullet"]
+                || $notification["notifymyandroid"]
+                || $notification["pushover"]
+                ) : ?>
+            <td>
+                <a href="?mod=mail&amp;a=toggle_status&amp;s=send_mail&amp;id=<?php echo $alert->id;
+                    ?>"><img src="static/images/<?php
+                    echo !$alert->send_mail?"disable":"enable"; ?>.png" alt="" /></a>
+            </td>
+            <?php endif; ?>
+            <?php if ($notification["freeMobile"]) : ?>
+            <td>
+                <a href="?mod=mail&amp;a=toggle_status&amp;s=send_sms_free_mobile&amp;id=<?php echo $alert->id;
+                    ?>"><img src="static/images/<?php
+                    echo !$alert->send_sms_free_mobile?"disable":"enable"; ?>.png" alt="" /></a>
+            </td>
+            <?php endif; ?>
+            <?php if ($notification["ovh"]) : ?>
+            <td>
+                <a href="?mod=mail&amp;a=toggle_status&amp;s=send_sms_ovh&amp;id=<?php echo $alert->id;
+                    ?>"><img src="static/images/<?php
+                    echo !$alert->send_sms_ovh?"disable":"enable"; ?>.png" alt="" /></a>
+            </td>
+            <?php endif; ?>
+            <?php if ($notification["pushbullet"]) : ?>
+            <td>
+                <a href="?mod=mail&amp;a=toggle_status&amp;s=send_pushbullet&amp;id=<?php echo $alert->id;
+                    ?>"><img src="static/images/<?php
+                    echo !$alert->send_pushbullet?"disable":"enable"; ?>.png" alt="" /></a>
+            </td>
+            <?php endif; ?>
+            <?php if ($notification["notifymyandroid"]) : ?>
+            <td>
+                <a href="?mod=mail&amp;a=toggle_status&amp;s=send_notifymyandroid&amp;id=<?php echo $alert->id;
+                    ?>"><img src="static/images/<?php
+                    echo !$alert->send_notifymyandroid?"disable":"enable"; ?>.png" alt="" /></a>
+            </td>
+            <?php endif; ?>
+            <?php if ($notification["pushover"]) : ?>
+            <td>
+                <a href="?mod=mail&amp;a=toggle_status&amp;s=send_pushover&amp;id=<?php echo $alert->id;
+                    ?>"><img src="static/images/<?php
+                    echo !$alert->send_pushover?"disable":"enable"; ?>.png" alt="" /></a>
+            </td>
+            <?php endif; ?>
+            <td>
+                <a href="?mod=mail&amp;a=toggle_status&amp;s=suspend&amp;id=<?php echo $alert->id;
+                    ?>"><img src="static/images/<?php
+                    echo $alert->suspend?"disable":"enable"; ?>.png" alt="" /></a>
+            </td>
+            <td>
+                <a href="?mod=mail&amp;a=form&amp;id=<?php echo $alert->id; ?>">modifier</a> |
+                <a href="?mod=mail&amp;a=form-delete&amp;id=<?php echo $alert->id; ?>">supprimer</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php endforeach; ?>
+<?php endif; ?>

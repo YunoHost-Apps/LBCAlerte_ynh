@@ -1,0 +1,1 @@
+*/5 * * * * www-data /usr/bin/php -f #DESTDIR#/check.php
