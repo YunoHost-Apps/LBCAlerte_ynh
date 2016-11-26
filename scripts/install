@@ -27,8 +27,7 @@ sudo mkdir -p $src_path/var
 sudo cp -a ../sources/. $src_path
 
 # Set permissions to app files
-sudo chown -R root: $src_path
-sudo chown -R www-data: $src_path/var
+sudo chown -R www-data: $src_path
 
 # Generate MySQL password and create database
 dbuser=$app
