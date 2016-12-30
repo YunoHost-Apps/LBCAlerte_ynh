@@ -19,10 +19,16 @@ language=$(ynh_app_setting_get "$app" language)
 # Remove trailing "/" for next commands
 path=${path%/}
 
+# Download sources 
+sudo wget -q https://github.com/Blount/LBCAlerte/archive/3.3.zip -O LBCAlerte.zip
+
+# Uncompress
+sudo unzip -qq LBCAlerte.zip -d ..
+
 # Copy source files
 src_path=/var/www/$app
 sudo mkdir -p $src_path
-sudo cp -a ../sources/. $src_path
+sudo cp -a ../LBCAlerte*/. $src_path
 
 # Set permissions to app files
 # you may need to make some file and/or directory writeable by www-data (nginx user)
