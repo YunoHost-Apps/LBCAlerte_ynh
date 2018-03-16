@@ -22,15 +22,15 @@ sudo yunohost app checkurl "${domain}${path}" -a "$app" \
     || ynh_die "Path not available: ${domain}${path}"
 
     # Download sources 
-sudo wget -q https://github.com/Blount/LBCAlerte/archive/3.3.zip -O LBCAlerte.zip
+sudo wget -q https://github.com/Blount/Cheky/archive/3.8.1.zip -O Cheky.zip
 
 # Uncompress
-sudo unzip -qq LBCAlerte.zip -d ..
+sudo unzip -qq Cheky.zip -d ..
 
 # Copy source files
 src_path=/var/www/$app
 sudo mkdir -p $src_path/var
-sudo cp -a ../LBCAlerte*/. $src_path
+sudo cp -a ../Cheky*/. $src_path
 
 # Set permissions to app files
 sudo chown -R www-data: $src_path
@@ -60,9 +60,9 @@ ynh_app_setting_set "$app" unprotected_uris "/"
 sudo yunohost app ssowatconf
 
 
-# Configure LBCAlerte via curl
+# Configure Cheky via curl
 sleep 2
-curl --resolve $domain:443:127.0.0.1 -kL -X POST https://$domain$path/index.php?mod=install --data "password=$password&confirmPassword=$password&type=db&db[host]=localhost&db[user]=$dbuser&db[password]=$dbpass&db[dbname]=$dbname" > /tmp/LBCAlerte-install.log 2>&1
+curl --resolve $domain:443:127.0.0.1 -kL -X POST https://$domain$path/index.php?mod=install --data "password=$password&confirmPassword=$password&type=db&db[host]=localhost&db[user]=$dbuser&db[password]=$dbpass&db[dbname]=$dbname" > /tmp/Cheky-install.log 2>&1
 
 #protect URIs if private
 if [ $is_public -eq 0 ];
@@ -73,6 +73,6 @@ fi
 
 # Add cron job
 cron_path="/etc/cron.d/$app"
-sed -i "s@#DESTDIR#@${src_path}@g" ../conf/LBCAlerte.cron
-sudo cp ../conf/LBCAlerte.cron "$cron_path"
+sed -i "s@#DESTDIR#@${src_path}@g" ../conf/Cheky.cron
+sudo cp ../conf/Cheky.cron "$cron_path"
 sudo chmod 644 "$cron_path"

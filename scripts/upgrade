@@ -20,15 +20,15 @@ language=$(ynh_app_setting_get "$app" language)
 path=${path%/}
 
 # Download sources 
-sudo wget -q https://github.com/Blount/LBCAlerte/archive/3.3.zip -O LBCAlerte.zip
+sudo wget -q https://github.com/Blount/Cheky/archive/3.3.zip -O Cheky.zip
 
 # Uncompress
-sudo unzip -qq LBCAlerte.zip -d ..
+sudo unzip -qq Cheky.zip -d ..
 
 # Copy source files
 src_path=/var/www/$app
 sudo mkdir -p $src_path
-sudo cp -a ../LBCAlerte*/. $src_path
+sudo cp -a ../Cheky*/. $src_path
 
 # Set permissions to app files
 # you may need to make some file and/or directory writeable by www-data (nginx user)
